@@ -11,3 +11,4 @@ requests==2.12.5
 tqdm==4.11.1
 watson-developer-cloud==0.23.0
 youtube-dl==2017.1.18
+flask
