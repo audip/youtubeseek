@@ -30,8 +30,8 @@ def get_video(url, video_id):
         'format': 'mp4',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'wav',
-            'preferredquality': '64',
+            'preferredcodec': 'aac',
+            'preferredquality': '16',
         }],
         'logger': ErrorLogger(),
         'progress_hooks': [a_hook],
