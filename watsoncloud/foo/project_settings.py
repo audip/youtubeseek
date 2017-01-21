@@ -10,8 +10,8 @@ PROJECTS_MAIN_DIR = join(".", "watsoncloud/projects")
 FULL_AUDIO_BASENAME = 'full-audio.wav'
 FULL_VIDEO_BASENAME = 'full-video.mp4'
 FULL_TRANSCRIPT_BASENAME = 'full-transcript.json'
-LINES_TRANSCRIPT_BASENAME = 'lines-transcript.csv'
-WORDS_TRANSCRIPT_BASENAME = 'words-transcript.csv'
+LINES_TRANSCRIPT_BASENAME = 'transcripts/'
+WORDS_TRANSCRIPT_BASENAME = 'transcripts/'
 WATSON_CREDS_FILENAME = "watsoncloud/credsfile_watson.json"
 
 def get_watson_creds(fname=WATSON_CREDS_FILENAME):
@@ -108,6 +108,12 @@ def project_dir(slug, make_dir = False):
         makedirs(d, exist_ok=True)
     return d
 
+def compile_project_dir(slug, make_dir = False):
+
+    if make_dir:
+        makedirs(d, exist_ok=True)
+    return d
+
 def audio_segments_dir(slug):
     """
     Creates a subdirectory within a given slug subdirectory
@@ -143,11 +149,11 @@ def transcripts_dir(slug):
       and returns the path.
 
     slug: a string representing the name of the project
-        e.g. "myvideo"
+        e.g. "/projects/transcripts/myvideo.wav"
     returns: the absolute path to the project's transcripts dir
         e.g. "./projects/myvideo/transcripts
     """
-    d = join(project_dir(slug), "transcripts")
+    d = PROJECTS_MAIN_DIR + '/' + "transcripts"
     makedirs(d, exist_ok=True)
     return d
 
@@ -192,12 +198,22 @@ def full_transcript_path(slug):
     p = join(project_dir(slug), FULL_TRANSCRIPT_BASENAME)
     return p
 
+def get_videos_dir():
+    d = "video-streams"
+    makedirs(d, exist_ok=True)
+    return d
 
+def check_audiostream_folder():
+    d = PROJECTS_MAIN_DIR+'/'+'audiostreams'
+    makedirs(d, exist_ok=True)
+    return d
 
 def lines_transcript_path(slug):
-    p = join(project_dir(slug), LINES_TRANSCRIPT_BASENAME)
+    folderpath = project_dir(slug) # +'/'+LINES_TRANSCRIPT_BASENAME
+    p = join(folderpath, slug)
     return p
 
 def words_transcript_path(slug):
-    p = join(project_dir(slug), WORDS_TRANSCRIPT_BASENAME)
+    folderpath = project_dir(slug)+'/'+WORDS_TRANSCRIPT_BASENAME
+    p = join(folderpath, slug)
     return p

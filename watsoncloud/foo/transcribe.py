@@ -20,9 +20,9 @@ def compile_timestamped_transcript_files(json_filenames):
     """
     compiled_results = []
     compiled_dict = {'results': compiled_results, "result_index": 0}
-    filenames = sorted(json_filenames, key=lambda x: int(basename(x).split('-')[0]))
-    for fn in filenames:
-        start_offset_sec = int(basename(fn).split('-')[0])
+    # filenames = sorted(json_filenames, key=lambda x: int(basename(x).split('-')[0]))
+    for fn in json_filenames:
+        start_offset_sec = 0
         with open(fn) as f:
             data = json.load(f)
             for result in data['results']:
@@ -218,4 +218,3 @@ def parse_transcript(data):
                 words.extend(linewords)
 
     return {'lines': lines, 'words': words}
-

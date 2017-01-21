@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 import json
-import downloader
+from watsoncloud import downloader
 from watsoncloud import transcribe
 from watsoncloud import compilator
 
@@ -11,9 +11,16 @@ base_url = "https://www.youtube.com/watch?v="
 def home():
     video_id = request.args.get('v')
     if video_id is not None:
-        downloader.get_video(base_url+video_id)
-        transcribe.speech_to_text('projects/obama-weekly-address-2015-10-31/')
-        compilator.compile_word_transcript('projects/obama-weekly-address-2015-10-31/')
+        # Download file and get path
+        downloaded_file = downloader.get_video(base_url+video_id, video_id)
+        print("DL file:"+downloaded_file)
+        # Transcribe the downloaded file
+        transcribed_file = transcribe.speech_to_text(downloaded_file)
+        print("TC file:"+transcribed_file)
+        # Compile words for transcribed file
+        compiled_file = compilator.compile_word_transcript(transcribed_file)
+        print("CL file:"+compiled_file)
+        # Return [{keyword: timestamp}]
         return video_id
     else:
         return "Invalid parameters, usage: http://youtubeseek.com/watch?v=abcdefg"

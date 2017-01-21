@@ -36,23 +36,29 @@ def transcribe_audio(project_slug, creds, overwrite=False):
     # with the POWER OF MULTITHREADED PRPOCESSINGASDF!!
     #
     # returns nothing...just prints to screen
-    audio_segments_fnames = audio_segments_filenames(project_slug)
+    """
+    project_slug: ./projects/audiostreams/filename.wav
+    """
+    # audio_segments_fnames = audio_segments_filenames(project_slug)
     watson_jobs = []
-    for audio_fn in audio_segments_fnames:
-        print("audio_filename:"+audio_fn)
-        time_slug = make_slug_from_path(audio_fn)
-        transcript_fn = join(transcripts_dir(project_slug), time_slug) + '.json'
-        if not exists(transcript_fn):
-            print("Sending to Watson API:\n\t", audio_fn)
-            job = Process(target=process_transcript_call,
-                          args=(audio_fn, transcript_fn, creds))
-            job.start()
-            watson_jobs.append(job)
+    # for audio_fn in audio_segments_fnames:
+    audio_fn = project_slug
+    print("audio_filename:"+audio_fn)
+    time_slug = make_slug_from_path(audio_fn)
+    transcript_fn = join(transcripts_dir(project_slug), time_slug) + '.json'
+    if not exists(transcript_fn):
+        print("Sending to Watson API:\n\t", audio_fn)
+        job = Process(target=process_transcript_call,
+                      args=(audio_fn, transcript_fn, creds))
+        job.start()
+        watson_jobs.append(job)
 
 
     # Wait for all jobs to end
     for job in watson_jobs:
         job.join()
+
+    return transcript_fn
 
 
 def compile_transcripts(project_slug):
