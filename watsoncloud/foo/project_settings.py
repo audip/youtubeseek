@@ -134,7 +134,7 @@ def audio_segments_filenames(slug):
 
 def supercuts_dir(slug):
     d = join(project_dir(slug), "supercuts")
-    # makedirs(d, exist_ok=True)
+    makedirs(d, exist_ok=True)
     return d
 
 def transcripts_dir(slug):
@@ -148,7 +148,7 @@ def transcripts_dir(slug):
         e.g. "./projects/myvideo/transcripts
     """
     d = join(project_dir(slug), "transcripts")
-    # makedirs(d, exist_ok=True)
+    makedirs(d, exist_ok=True)
     return d
 
 def transcripts_filenames(slug):
