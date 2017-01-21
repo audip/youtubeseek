@@ -37,21 +37,26 @@ def audio_search():
     video = pafy.new(url)
     title = video.title
     filename = title + '-' + video_id + '.json'
-    print(filename)
     # Form saved file name
     if keywords is None:
         return "Invalid parameters, usage: http://youtubeseek.com/audiosearch?v=abcedfg&q=man,woman"
-    # Open file and
-    with open('watsoncloud/projects/'+filename) as f:
-        result = find_transcript_timestamps(f, keywords)
-        # @return: dict {keyword1:[ts1,ts2,ts3],keyword2:[ts1,ts2,ts3],keyword3:[ts1,ts2,ts3]}
-        return json.dumps(result)
+    result = find_transcript_timestamps(f, keywords)
+    # @return: dict {keyword1:[ts1,ts2,ts3],keyword2:[ts1,ts2,ts3],keyword3:[ts1,ts2,ts3]}
+    return json.dumps(result)
 
 @app.route("/videosearch",methods=['GET'])
 def video_search():
     keywords = request.args.get('q')
+    video_id = request.args.get('v')
+    # Form youtube url
+    url = base_url+video_id
+    # Fetch video transcript_filename
+    video = pafy.new(url)
+    title = video.title
+    filename = title + '-' + video_id + '.json'
+    # Form saved file name
     if keywords is None:
-        return "Invalid parameters, usage: http://youtubeseek.com/videosearch?v=abcdefg&q=man,woman"
+        return "Invalid parameters, usage: http://youtubeseek.com/audiosearch?v=abcedfg&q=man,woman"
     result = find_tag_timestamps(f, keywords)
     # @return: dict {keyword1:[ts1,ts2,ts3],keyword2:[ts1,ts2,ts3],keyword3:[ts1,ts2,ts3]}
     return json.dumps(result)
