@@ -1,5 +1,5 @@
 from clarifai.client import ClarifaiApi
-clarifai_api = ClarifaiApi("0eTyjyM4mQs8nFuh8Vi79j-qsdnFCLzu2yv5Jfhs", "nNOBHxMOSExkQlmYZVEQ0gaPpuDtWT2mFG72Z9SJ", language="en")
+clarifai_api = ClarifaiApi("HKu2ARzbvjumCPiD8tJ9Go7wiFQRol8DYF80QKz2", "6wTENoEslZ14tEBLhbu_51JtQdodUhvHWz0qc3Ha", language="en")
 import pafy
 
 
