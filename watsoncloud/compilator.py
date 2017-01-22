@@ -18,7 +18,8 @@ def compile_project(slug):
     # with open(full_transcript_path(slug), 'w') as f:
     #     f.write(json.dumps(tsdata, indent=4))
     #     print("Wrote:\n\t", full_transcript_path(slug))
-    with open(project_dir(slug)+'.json', 'w') as f:
+    filename = project_dir(slug)+'.json'
+    with open(filename, 'w') as f:
         lines_data = extract_line_level_data(tsdata)
         f.write(json.dumps(lines_data, indent = 4))
         print("Wrote", len(lines_data), "lines to:\n\t", lines_transcript_path(slug))
@@ -27,6 +28,7 @@ def compile_project(slug):
     #     wordsdata = extract_word_level_data(tsdata)
     #     f.write(json.dumps(wordsdata, indent = 4))
     #     print("Wrote", len(wordsdata), "words to: \n\t", words_transcript_path(slug))
+    return filename
 
 
 def compile_word_transcript(slug):
@@ -38,6 +40,6 @@ def compile_word_transcript(slug):
 
     # project_dir(pslug)=
     print("Compiling project at:\n\t", project_dir(pslug))
-    compile_project(pslug)
+    filename = compile_project(pslug)
 
-    return "Hello"
+    return filename
