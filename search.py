@@ -7,7 +7,8 @@ def videoJSON(name, listOfWords):
     for item in listOfWords:
         dictionaryToReturn[item] = []
 
-    word_dic = eval(open(name).read())
+    # word_dic = eval(open(name).read())
+    word_dic = name
     results = word_dic['results'][0]['result']['tag']['classes'] # Classes
     probs = word_dic['results'][0]['result']['tag']['probs'] # Probs
 
@@ -31,8 +32,9 @@ def audioJSON(name, listOfWords):
     for item in listOfWords:
         dictionaryToReturn[item] = []
 
-    with open(name) as data_file:
+    with open(name, 'r') as data_file:
         data = json.load(data_file)
+        # data = json.loads(data_file.decode("utf-8"))
 
     for item in data:
         for word in item['words']:

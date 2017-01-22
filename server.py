@@ -5,10 +5,12 @@ from watsoncloud import transcribe
 from watsoncloud import compilator
 import pafy
 from search import audioJSON, videoJSON
+from clarifai_v1 import fetch_video_tags
 
 
 app = Flask(__name__)
 base_url = "https://www.youtube.com/watch?v="
+project_base = "./watsoncloud/projects/"
 
 @app.route("/watch", methods=['GET'])
 def home():
@@ -38,10 +40,11 @@ def audio_search():
     video = pafy.new(url)
     title = video.title
     filename = title + '-' + video_id + '.json'
+    filepath = project_base+filename
     # Form saved file name
     if keywords is None:
         return "Invalid parameters, usage: http://youtubeseek.com/audiosearch?v=abcedfg&q=man,woman"
-    result = audioJSON(f, keywords)
+    result = audioJSON(filepath, keywords.split(","))
     # @return: dict {keyword1:[ts1,ts2,ts3],keyword2:[ts1,ts2,ts3],keyword3:[ts1,ts2,ts3]}
     return json.dumps(result)
 
@@ -51,14 +54,13 @@ def video_search():
     video_id = request.args.get('v')
     # Form youtube url
     url = base_url+video_id
-    # Fetch video transcript_filename
-    video = pafy.new(url)
-    title = video.title
-    filename = title + '-' + video_id + '.json'
+
+    video_tags = fetch_video_tags(url, keywords)
+
     # Form saved file name
     if keywords is None:
         return "Invalid parameters, usage: http://youtubeseek.com/audiosearch?v=abcedfg&q=man,woman"
-    result = videoJSON(f, keywords)
+    result = videoJSON(video_tags, keywords.split(","))
     # @return: dict {keyword1:[ts1,ts2,ts3],keyword2:[ts1,ts2,ts3],keyword3:[ts1,ts2,ts3]}
     return json.dumps(result)
 
