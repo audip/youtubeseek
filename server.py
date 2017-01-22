@@ -4,6 +4,7 @@ from watsoncloud import downloader
 from watsoncloud import transcribe
 from watsoncloud import compilator
 import pafy
+from search import audioJSON, videoJSON
 
 
 app = Flask(__name__)
@@ -40,7 +41,7 @@ def audio_search():
     # Form saved file name
     if keywords is None:
         return "Invalid parameters, usage: http://youtubeseek.com/audiosearch?v=abcedfg&q=man,woman"
-    result = find_transcript_timestamps(f, keywords)
+    result = audioJSON(f, keywords)
     # @return: dict {keyword1:[ts1,ts2,ts3],keyword2:[ts1,ts2,ts3],keyword3:[ts1,ts2,ts3]}
     return json.dumps(result)
 
@@ -57,7 +58,7 @@ def video_search():
     # Form saved file name
     if keywords is None:
         return "Invalid parameters, usage: http://youtubeseek.com/audiosearch?v=abcedfg&q=man,woman"
-    result = find_tag_timestamps(f, keywords)
+    result = videoJSON(f, keywords)
     # @return: dict {keyword1:[ts1,ts2,ts3],keyword2:[ts1,ts2,ts3],keyword3:[ts1,ts2,ts3]}
     return json.dumps(result)
 
