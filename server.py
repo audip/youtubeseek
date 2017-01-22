@@ -1,14 +1,14 @@
 from flask import Flask, request, render_template
 import json
-from watsoncloud import downloader, transcribe, compilator
+from watsoncloud import downloader
+from watsoncloud import transcribe
+from watsoncloud import compilator
 import pafy
-from search import audioJSON, videoJSON, sanitize_title
+from search import audioJSON, videoJSON
 from clarifai_v1 import fetch_video_tags
-from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
-CORS(app)
 base_url = "https://www.youtube.com/watch?v="
 project_base = "./watsoncloud/projects/"
 
@@ -38,11 +38,7 @@ def audio_search():
     url = base_url+video_id
     # Fetch video transcript_filename
     video = pafy.new(url)
-    dirty_title = str(video.title)
-
-    # Video title sanitization
-    title = sanitize_title(dirty_title)
-
+    title = video.title
     filename = title + '-' + video_id + '.json'
     filepath = project_base+filename
     # Form saved file name
