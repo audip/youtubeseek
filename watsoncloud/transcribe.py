@@ -8,6 +8,7 @@ def speech_to_text(filepath):
     filepath: ./projects/audiostreams/filename.wav
     """
     pslug = str(filepath)
+    print("Filepath:"+pslug)
     # folder = project_dir(pslug)
     check_audiostream_folder()
     # if not does_project_exist(check_audiostream_folder()):

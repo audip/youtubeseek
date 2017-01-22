@@ -14,7 +14,7 @@ def videoJSON(name, listOfWords):
 
     for x in range(0, len(results)):
         if (dictionaryToReturn[results[x][0]] is not None):
-            if (probs[x][1] > 0.80):
+            if (probs[x][0] > 0.80):
                 word = results[x][0]
                 if (len(dictionaryToReturn[word]) > 0):
                     lastNumber = dictionaryToReturn[word][-1]

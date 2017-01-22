@@ -6,11 +6,13 @@ from watsoncloud import compilator
 import pafy
 from search import audioJSON, videoJSON
 from clarifai_v1 import fetch_video_tags
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
 base_url = "https://www.youtube.com/watch?v="
 project_base = "./watsoncloud/projects/"
+CORS(app)
 
 @app.route("/watch", methods=['GET'])
 def home():
