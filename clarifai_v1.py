@@ -1,5 +1,5 @@
 from clarifai.client import ClarifaiApi
-clarifai_api = ClarifaiApi("YQhKk98oRlSgA5aTidpw4eAV1OM7QYCrADEjApdf", "DRSbu9eVjQG7laNamJzS3c2nMFAvyDLDJYSPPKa_", language="en")
+clarifai_api = ClarifaiApi("mPCn6knfdOnfOrQJD-p0T-TtnbLHsomQ-8_h4ej7", "vXqL4OpWM4Z8urC7mFn5-SqwH0zc02yo0rMFMU5_", language="en")
 import pafy
 
 
@@ -13,17 +13,13 @@ def get_video_url(url):
         return s.url
     return None
 
-def fetch_video_tags(url):
+def fetch_video_tags(url, tags):
 # Fetch tags using Clarif.AI
     video_url = get_video_url(url)
     if video_url is None:
         raise ConnectionError("URL not found, check again.")
-    result = clarifai_api.tag_urls(video_url)
-    return result["results"]
-
-def match_tags(tags):
-# Search tags in video
-    pass
+    result = clarifai_api.tag_urls(video_url, select_classes=tags)
+    return result
 
 # Local File
 # result = clarifai_api.tag_image_base64(open('/Users/USER/my_video.mp4'))
